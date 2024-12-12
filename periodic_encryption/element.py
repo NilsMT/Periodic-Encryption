@@ -35,16 +35,25 @@ class LoopCounterElement(pt.core.Element):
 ##############################################
 
 def getElementByNumber(number: int) -> pt.core.Element:
+    """
+    Return the element by its number
+    """
     return pt.elements[number]
 
 
 
 def getElementByName(name: str) -> pt.core.Element:
+    """
+    Return the element by its name
+    """
     return pt.elements.name(name)
 
 
 
 def getLastElement() -> pt.core.Element:
+    """
+    Return the last element of the periodic table
+    """
     bst = 0
     for e in pt.elements:
         if e.number > bst:
@@ -54,6 +63,9 @@ def getLastElement() -> pt.core.Element:
 
 
 def getElementBySymbol(symbol: str) -> pt.core.Element:
+    """
+    Return the element by its symbol
+    """
     return pt.elements.symbol(symbol)
 
 ##############################################
@@ -61,6 +73,9 @@ def getElementBySymbol(symbol: str) -> pt.core.Element:
 ##############################################
 
 def turnCharacterIntoElement(character: chr) -> pt.core.Element:
+    """
+    Convert a character into an element
+    """
     el = None
     last = getLastElement().number
 
@@ -82,6 +97,9 @@ def turnCharacterIntoElement(character: chr) -> pt.core.Element:
 
 
 def turnStringIntoElements(string: str) -> list[pt.core.Element]:
+    """
+    Convert a string into a list of elements
+    """
     lst: list[pt.core.Element] = []
     for c in string:
         lst.append(turnCharacterIntoElement(c))
@@ -92,6 +110,9 @@ def turnStringIntoElements(string: str) -> list[pt.core.Element]:
 ##############################################
 
 def turnElementIntoCharacter(element: pt.core.Element) -> chr:
+    """
+    Convert an element into a character
+    """
     if (element.number < 900):
         #its a normal element
         return chr(element.number)
@@ -107,6 +128,9 @@ def turnElementIntoCharacter(element: pt.core.Element) -> chr:
 
 
 def turnElementsIntoString(elementList: list[pt.core.Element]) -> str:
+    """
+    Convert a list of elements into a string
+    """
     string = ""
     for e in elementList:
         string += turnElementIntoCharacter(e)

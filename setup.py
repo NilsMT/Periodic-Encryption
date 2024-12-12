@@ -1,5 +1,9 @@
 from distutils.core import setup
 
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 setup(
     name="periodic_encryption",
     packages = ["periodic_encryption"], 
@@ -7,6 +11,8 @@ setup(
     license='MIT',
 
     description="Allow you to encrypt & decrypt strings using the periodic table elements",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
 
     author="NilsMT",
     author_email="nilsmoreauthomas@gmail.com",
