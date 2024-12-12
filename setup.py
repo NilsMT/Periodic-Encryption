@@ -5,8 +5,8 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name="periodic_encryption",
-    packages = ["periodic_encryption"], 
+    name="periodicencryption",
+    packages = ["periodicencryption"], 
     version = '1.0',
     license='MIT',
 

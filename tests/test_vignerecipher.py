@@ -1,4 +1,4 @@
-from periodic_encryption import vigenerecipher as vc
+from periodicencryption import vigenerecipher as vc
 
 def test_unknown_not_in_row():
     row = vc.generateRow()

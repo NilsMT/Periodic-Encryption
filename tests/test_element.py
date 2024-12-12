@@ -1,8 +1,8 @@
 import pytest
 import periodictable as pt
 
-from periodic_encryption import element as el
-from periodic_encryption import encryption as en
+from periodicencryption import element as el
+from periodicencryption import encryption as en
 
 @pytest.mark.parametrize(
     "string",  # Test inputs and expected result

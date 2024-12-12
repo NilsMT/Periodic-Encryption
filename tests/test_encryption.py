@@ -1,7 +1,7 @@
 import pytest
-from periodic_encryption import encryption as en
-from periodic_encryption import element as el
-from periodic_encryption import vigenerecipher as vc
+from periodicencryption import encryption as en
+from periodicencryption import element as el
+from periodicencryption import vigenerecipher as vc
 
 
 

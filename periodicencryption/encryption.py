@@ -1,7 +1,7 @@
 import periodictable as pt
 import re
-from periodic_encryption import vigenerecipher as vc
-from periodic_encryption import element as el
+from periodicencryption import vigenerecipher as vc
+from periodicencryption import element as el
 
 def giveKeysFromList(elementList: list[pt.core.Element]) -> tuple[str, str]:
     """
