@@ -27,7 +27,7 @@ def test_vigenere_encode_decode():
     keystream = "hidden"
 
     res_encoded = vc.encode(row, key, keystream, message)
-    print(res_encoded)
+    
     assert res_encoded == "qknevwskjjmsz"
     assert vc.decode(row, key, keystream, res_encoded) == message
 

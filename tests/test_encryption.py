@@ -13,8 +13,6 @@ def test_encrypt_decrypt():
 
     publicKey, privateKey = en.giveKeysFromString(message)
 
-    print(publicKey, privateKey)
-
     decrypted = en.decrypt(row, publicKey, privateKey, encrypted)
 
     assert decrypted == message, f"Expected {message}, but got {decrypted}"

@@ -4,6 +4,29 @@
 
 This package allows you to encrypt and decrypt messages by the mean of `Vigenère Cipher` and `Periodic Table of Elements`.
 
+Here is a quick example :
+```py
+import periodicencryption as pe
+
+row = pe.generateRow()
+
+puK, prK = pe.giveKeysFromString("Hello World")
+
+print(puK)
+print(prK)
+
+enc = pe.encrypt(row, "Hello World")
+
+print(enc)
+print(pe.decrypt(row, puK, prK, enc))
+```
+```
+257.0HafniumFer1846
+HafniumFer
+ueTqrD8G#zMbbg3vhB6J44
+Hello World
+```
+
 ## Table of contents
 
 1. [Installation](#installation)

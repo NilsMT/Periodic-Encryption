@@ -68,14 +68,10 @@ def decrypt(row: str, publicKey: str, privateKey: str, message: str) -> str:
 
     decodedMessage = vc.decode(row, publicKey, privateKey, message)
 
-    print(decodedMessage)
-
     # 2 - turn elements into message
 
     elementNames = re.findall('[A-Z][^A-Z]*', decodedMessage)
     elementList = [el.getElementBySymbol(name) for name in elementNames]
-
-    print(elementList)
 
     finalMessage = el.turnElementsIntoString(elementList)
 
