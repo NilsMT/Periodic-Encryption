@@ -2,7 +2,6 @@ import pytest
 import periodictable as pt
 
 from periodicencryption import element as el
-from periodicencryption import encryption as en
 
 @pytest.mark.parametrize(
     "string",  # Test inputs and expected result
@@ -17,19 +16,19 @@ from periodicencryption import encryption as en
 
 
 def test_string_elements_conversion(string: str):
-    elementList = el.turnStringIntoElements(string)
-    assert el.turnElementsIntoString(elementList) == string, f"Expected {string}, but got {el.turnElementsIntoString(elementList)}"
+    element_list = el.turn_str_into_el(string)
+    assert el.turn_el_into_str(element_list) == string, f"Expected {string}, but got {el.turn_el_into_str(element_list)}"
 
 
 
 def test_is_loopcounter():
-    element = el.turnCharacterIntoElement("╠")
+    element = el.turn_chr_into_el("╠")
     assert element.number >= 900
-    assert isinstance(element, el.LoopCounterElement), f"Expected type el.LoopCounterElement, but got {type(element)}"
+    assert isinstance(element, el.CounterElement), f"Expected type el.CounterElement, but got {type(element)}"
 
 
 
 def test_is_not_loopcounter():
-    element = el.turnCharacterIntoElement("a")
+    element = el.turn_chr_into_el("a")
     assert element.number < 900
     assert isinstance(element, pt.core.Element), f"Expected type pt.core.Element, but got {type(element)}"

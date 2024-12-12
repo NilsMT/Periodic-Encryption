@@ -4,7 +4,7 @@ import periodictable as pt
 # CUSTOM ELEMENT TO HANDLE CODES OUT OF RANGE
 ##############################################
 
-class LoopCounterElement(pt.core.Element):
+class CounterElement(pt.core.Element):
     """
     A custom element class to handle elements with codes out of the periodic table range.\n
     It store in the mass: `900 + loop counter` how many time we looped out of range over the periodic table to finaly fit the ASCII code in the table.\n
@@ -13,7 +13,7 @@ class LoopCounterElement(pt.core.Element):
     def __init__(self, cnt: int, el: pt.core.Element):        
         # Initialize the parent class
         super().__init__(
-            name=f"Loopcounterium-{cnt}-{el.name}",
+            name=f"Counterium-{cnt}-{el.name}",
             symbol=f"Lc{el.symbol}{cnt}",
             Z=900 + cnt,
             ions=(),
@@ -34,7 +34,7 @@ class LoopCounterElement(pt.core.Element):
 # GET ELEMENTS
 ##############################################
 
-def getElementByNumber(number: int) -> pt.core.Element:
+def get_el_by_number(number: int) -> pt.core.Element:
     """
     Return the element by its number
     """
@@ -42,15 +42,7 @@ def getElementByNumber(number: int) -> pt.core.Element:
 
 
 
-def getElementByName(name: str) -> pt.core.Element:
-    """
-    Return the element by its name
-    """
-    return pt.elements.name(name)
-
-
-
-def getLastElement() -> pt.core.Element:
+def get_last_el() -> pt.core.Element:
     """
     Return the last element of the periodic table
     """
@@ -58,11 +50,15 @@ def getLastElement() -> pt.core.Element:
     for e in pt.elements:
         if e.number > bst:
             bst = e.number
-    return getElementByNumber(bst)
+    return get_el_by_number(bst)
 
+def get_el_by_name(name: str) -> pt.core.Element:
+    """
+    Return the element by its name
+    """
+    return pt.elements.name(name)
 
-
-def getElementBySymbol(symbol: str) -> pt.core.Element:
+def get_el_by_symbol(symbol: str) -> pt.core.Element:
     """
     Return the element by its symbol
     """
@@ -72,12 +68,12 @@ def getElementBySymbol(symbol: str) -> pt.core.Element:
 # TEXT ----> ELEMENTS
 ##############################################
 
-def turnCharacterIntoElement(character: chr) -> pt.core.Element:
+def turn_chr_into_el(character: chr) -> pt.core.Element:
     """
     Convert a character into an element
     """
     el = None
-    last = getLastElement().number
+    last = get_last_el().number
 
     code = ord(character)
 
@@ -86,30 +82,30 @@ def turnCharacterIntoElement(character: chr) -> pt.core.Element:
         quot = code // last
         truncated_code = code % last
 
-        return LoopCounterElement(
+        return CounterElement(
             quot,
-            getElementByNumber(truncated_code)
+            get_el_by_number(truncated_code)
         )
 
     else:
-        return getElementByNumber(code)
+        return get_el_by_number(code)
 
 
 
-def turnStringIntoElements(string: str) -> list[pt.core.Element]:
+def turn_str_into_el(string: str) -> list[pt.core.Element]:
     """
     Convert a string into a list of elements
     """
     lst: list[pt.core.Element] = []
     for c in string:
-        lst.append(turnCharacterIntoElement(c))
+        lst.append(turn_chr_into_el(c))
     return lst
 
 ##############################################
 # ELEMENTS ----> TEXT
 ##############################################
 
-def turnElementIntoCharacter(element: pt.core.Element) -> chr:
+def turn_el_into_chr(element: pt.core.Element) -> chr:
     """
     Convert an element into a character
     """
@@ -118,20 +114,20 @@ def turnElementIntoCharacter(element: pt.core.Element) -> chr:
         return chr(element.number)
     else:
         #its a loop counter element
-        loopCount = element.number - 900
-        normalElementName = element.name.split("-")[-1]
+        loop_count = element.number - 900
+        el_name = element.name.split("-")[-1]
 
-        excess = loopCount * getLastElement().number
+        excess = loop_count * get_last_el().number
 
-        return chr(excess + getElementByName(normalElementName).number)
+        return chr(excess + get_el_by_name(el_name).number)
 
 
 
-def turnElementsIntoString(elementList: list[pt.core.Element]) -> str:
+def turn_el_into_str(element_list: list[pt.core.Element]) -> str:
     """
     Convert a list of elements into a string
     """
     string = ""
-    for e in elementList:
-        string += turnElementIntoCharacter(e)
+    for e in element_list:
+        string += turn_el_into_chr(e)
     return string

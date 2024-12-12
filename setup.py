@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 setup(
     name="periodicencryption",
     packages = ["periodicencryption"], 
-    version = '1.0.2',
+    version = '1.0.3',
     license='MIT',
 
     description="Allow you to encrypt & decrypt strings using the periodic table elements",

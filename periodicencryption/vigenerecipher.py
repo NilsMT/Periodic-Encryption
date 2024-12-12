@@ -1,7 +1,7 @@
 import string
 import pandas as pd
 
-def generateRow() -> str:
+def generate_row() -> str:
     """
     Generates a row of characters that can be used for Vigenère cipher.
     It includes ASCII letters, digits, special characters, whitespace, and some accented  letters.
@@ -16,61 +16,61 @@ def generateRow() -> str:
 
 
 
-def generateTable(row: str, publicKey: str) -> pd.DataFrame:
+def generate_table(row: str, public_key: str) -> pd.DataFrame:
     """
-    Generates the Vigenère table by shifting the row based on the `publicKey`.\n
-    The `publicKey` determines the shifting for each row.
+    Generates the Vigenère table by shifting the row based on the `public_key`.\n
+    The `public_key` determines the shifting for each row.
     """
-    rowWithoutKey = "".join([char for char in row if char not in publicKey])
-    dfRow = list(publicKey + rowWithoutKey)
+    row_without_key = "".join([char for char in row if char not in public_key])
+    df_row = list(public_key + row_without_key)
 
-    df = pd.DataFrame(columns=list(dfRow), index=list(dfRow))
+    df = pd.DataFrame(columns=list(df_row), index=list(df_row))
 
     # Create the first row
-    df.loc[dfRow[0]] = dfRow
+    df.loc[df_row[0]] = df_row
 
     df.index
     # Create the following rows
     for i in range(1, len(row)):
-        dfRow = dfRow[1:] + dfRow[:1]
+        df_row = df_row[1:] + df_row[:1]
 
         df.loc[
             df.index.tolist()[i]
-        ] = dfRow
+        ] = df_row
 
     return df
 
 
 
-def encode(row: str, publicKey: str, privateKey: str, message: str) -> str:
+def vignere_encode(row: str, public_key: str, private_key: str, message: str) -> str:
     """
     Encodes a message using the Vigenère cipher.
     """
-    table = generateTable(row, publicKey)
+    table = generate_table(row, public_key)
     encoded_message = ""
 
-    # Ensure len(privateKey) is at least len(message)
-    privateKey = (privateKey * ((len(message) // len(privateKey)) + 1))[:len(message)]
+    # Ensure len(private_key) is at least len(message)
+    private_key = (private_key * ((len(message) // len(private_key)) + 1))[:len(message)]
 
-    for m,k in zip(message, privateKey):
+    for m,k in zip(message, private_key):
         encoded_message += table.loc[m][k]
     
     return encoded_message
 
 
 
-def decode(row: str, publicKey: str, privateKey: str, encoded_message: str) -> str:
+def vignere_decode(row: str, public_key: str, private_key: str, encoded_message: str) -> str:
     """
     Decodes a message using the Vigenère cipher.
     """
-    table = generateTable(row, publicKey)
+    table = generate_table(row, public_key)
     decoded_message = ""
 
-    # Ensure len(privateKey) is at least len(encoded_message)
-    privateKey = (privateKey * ((len(encoded_message) // len(privateKey)) + 1))[:len(encoded_message)]
+    # Ensure len(private_key) is at least len(encoded_message)
+    private_key = (private_key * ((len(encoded_message) // len(private_key)) + 1))[:len(encoded_message)]
 
-    for m,k in zip(encoded_message, privateKey):
-        # Find the column (publicKey) and look for the original row (message character)
+    for m,k in zip(encoded_message, private_key):
+        # Find the column (public_key) and look for the original row (message character)
         decoded_message += table[table[k] == m].index[0]
     
     return decoded_message

@@ -5,40 +5,45 @@ from periodicencryption import vigenerecipher as vc
 
 
 
-def test_encrypt_decrypt():
+def test_encrypt_decrypt_no_set_keys():
     message = "Hello, World!"
-    row = vc.generateRow()
+    row = vc.generate_row()
 
-    encrypted = en.encrypt(row, message)
+    encrypted = en.encrypt_keys_auto(row, message)
 
-    publicKey, privateKey = en.giveKeysFromString(message)
+    public_key, private_key = en.give_keys_from_string(message)
 
-    decrypted = en.decrypt(row, publicKey, privateKey, encrypted)
+    decrypted = en.decrypt(row, public_key, private_key, encrypted)
 
     assert decrypted == message, f"Expected {message}, but got {decrypted}"
 
+def test_encrypt_decrypt_set_keys():
+    message = "Hello, World!"
+    row = vc.generate_row()
 
+    puk = "Kryptos"
+    prk = "Hide"
+
+    encrypted = en.encrypt_keys_manual(row, puk, prk, message)
+
+    decrypted = en.decrypt(row, puk, prk, encrypted)
+
+    assert decrypted == message, f"Expected {message}, but got {decrypted}"
 
 def test_encrypt_decrypt_duplicate_in_private():
-    message = "Hello, World!"
-    row = vc.generateRow()
+    row = vc.generate_row()
 
-    encrypted = en.encrypt(row, message)
-
-    publicKey, privateKey = "hj","aa"
+    public_key, private_key = "hj","aa"
     
     with pytest.raises(ValueError):
-        en.decrypt(row, publicKey, privateKey, encrypted), f"Expected Error, but got ..."
+        en.decrypt(row, public_key, private_key, "message"), f"Expected Error, but got ..."
 
 
 
 def test_encrypt_decrypt_duplicate_in_public():
-    message = "Hello, World!"
-    row = vc.generateRow()
+    row = vc.generate_row()
 
-    encrypted = en.encrypt(row, message)
-
-    publicKey, privateKey = "aa","hj"
+    public_key, private_key = "aa","hj"
 
     with pytest.raises(ValueError):
-        en.decrypt(row, publicKey, privateKey, encrypted), f"Expected Error, but got ..."
+        en.decrypt(row, public_key, private_key, "message"), f"Expected Error, but got ..."
