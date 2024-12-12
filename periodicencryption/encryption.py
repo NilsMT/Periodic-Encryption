@@ -45,9 +45,6 @@ def encrypt(row: str, message: str) -> str:
     # 2 - encode message using Vigenère cipher
 
     publicKey, privateKey = giveKeysFromList(elementList)
-    
-    print("Private Key : ", privateKey)
-    print("Public key : ", publicKey)
 
     stringElement = ''.join([e.symbol for e in elementList])
 
