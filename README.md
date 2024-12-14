@@ -195,7 +195,8 @@ from periodicencryption import element
 ```py
 class CounterElement(pt.core.Element)
 ```
-A custom element class to handle elements with codes out of the periodic table range. It stores the mass (`900 + <loop counter>`) to track how many times the code looped out of the periodic table, and stores the final element used to fit the ASCII code in the table.
+A custom element class to handle elements with codes out of the periodic table range.<br>
+It stores the mass (`900 + <loop counter>`) to track how many times the code looped out of the periodic table, and stores the final element used to fit the ASCII code in the table.
 
 #### Args:
 - `cnt` (int): The loop counter (i.e., how many times we looped out of range over the periodic table).
@@ -204,7 +205,7 @@ A custom element class to handle elements with codes out of the periodic table r
 #### Class Methods:
 - `split_symbol(symbol: str) -> tuple[str, int]`: Splits a symbol into the element symbol and the counter.
 
---
+---
 
 ### get_el_by_number
 ```py
