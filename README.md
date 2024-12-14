@@ -78,13 +78,14 @@ Also don't worry, characters code that exceed 118 (the highest number amongst th
 
 ### Package Structure
 
-The package is structured like that :
+The main package is structured like that :
 ```
 periodicencryption
-    ├── encryption
-    ├── element
-    └── vigenerecipher
+    - encryption
+    - element
+    - vigenerecipher
 ```
+
 And there are aliases :
 
 | Sub-package | Alias |
