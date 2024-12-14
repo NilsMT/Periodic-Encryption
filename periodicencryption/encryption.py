@@ -1,12 +1,20 @@
-import periodictable as pt
 import re
-from periodicencryption import vigenerecipher as vc
-from periodicencryption import element as el
+import periodicencryption.vigenerecipher as vc
+import periodicencryption.element as el
 
-def give_keys_from_string(string: str) -> tuple[str, str]:
+def generate_keys(string: str) -> tuple[str, str]:
+    """Generates public and private keys from a string.
+
+    Args:
+        string (str): The string to generate the keys from.
+
+    Raises:
+        ValueError: If the element list is empty.
+
+    Returns:
+        tuple[str, str]: The public and private keys.
     """
-    Generates the private and public keys, needed for the encryption process, from a string.
-    """
+
     element_list = el.turn_str_into_el(string)
 
     if len(element_list) == 0:
@@ -15,17 +23,30 @@ def give_keys_from_string(string: str) -> tuple[str, str]:
     first_element = element_list[0]
     last_element = element_list[-1]
 
-    # private key : 1st element name + last element symbol + 1st element symbol + last element name
-    private_key = first_element.name.capitalize() + last_element.symbol + first_element.symbol + last_element.name.capitalize()
     # public key : last element mass + 1st element name + last element name + 1st element mass
     public_key = str(last_element.mass) + first_element.name.capitalize() + last_element.name.capitalize() + str(first_element.mass)
+    # private key : 1st element name + last element symbol + 1st element symbol + last element name
+    private_key = first_element.name.capitalize() + last_element.symbol + first_element.symbol + last_element.name.capitalize()
 
-    return "".join(dict.fromkeys(public_key)), "".join(dict.fromkeys(private_key))
+    return "".join(dict.fromkeys(public_key)), "".join(dict.fromkeys(private_key)) #remove duplicates
 
-def encrypt_keys_manual(row: str, public_key: str, private_key: str, message: str) -> str:
+def encrypt_keys_manual(row: str, message: str, public_key: str, private_key: str) -> str:
+    """Encrypts a message using the Vigenère cipher and the periodic table elements, with the specified keys.
+
+    Args:
+        row (str): the row of characters to use (i.e. which characters are allowed to be encrypted, like "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        message (str): the message to encrypt
+        public_key (str): the public key
+        private_key (str): the private key
+
+    Raises:
+        ValueError: If the public or private key contains duplicates.
+        ValueError: If the message is empty.
+
+    Returns:
+        str: the encrypted message
     """
-    Encrypts a message using the Vigenère cipher and the periodic table elements, with the specified keys.
-    """
+
     if len("".join(dict.fromkeys(public_key))) != len(public_key) or len("".join(dict.fromkeys(private_key))) != len(private_key):
         raise ValueError("Public and private keys must not contain duplicates.")
     
@@ -40,26 +61,49 @@ def encrypt_keys_manual(row: str, public_key: str, private_key: str, message: st
 
     string_element = ''.join([e.symbol for e in element_list])
 
-    encoded = vc.vignere_encode(row, public_key, private_key, string_element)
-    
+    encoded = vc.vigenere_encode(row, string_element,public_key, private_key)
+
     return encoded
 
-def encrypt_keys_auto(row: str, message: str) -> str:
-    """
-    Encrypts a message using the Vigenère cipher and the periodic table elements, keys are generated from the message.
-    """
+def encrypt_keys_auto(row: str, message: str) -> tuple[str, str, str]:
+    """Encrypts a message using the Vigenère cipher and the periodic table elements, with automatically generated keys.
+
+    Args:
+        row (str): the row of characters to use (i.e. which characters are allowed to be encrypted, like "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        message (str): the message to encrypt
+
+    Raises:
+        ValueError: If the message is empty.
+
+    Returns:
+        tuple[str, str, str]: the encrypted message, the public key, and the private key
+    """   
+
     if len(message) == 0:
         raise ValueError("Message cannot be empty.")
 
-    public_key, private_key = give_keys_from_string(message)
+    public_key, private_key = generate_keys(message)
     
-    return encrypt_keys_manual(row, public_key, private_key, message)
+    return encrypt_keys_manual(row, message, public_key, private_key), public_key, private_key
 
 
-def decrypt(row: str, public_key: str, private_key: str, encoded: str) -> str:
+def decrypt(row: str, encoded: str, public_key: str, private_key: str) -> str:
+    """Decrypts a message using the Vigenère cipher and the periodic table elements.
+
+    Args:
+        row (str): the row of characters to use (i.e. which characters are allowed to be encrypted, like "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        encoded (str): the encoded message
+        public_key (str): the public key
+        private_key (str): the private key
+
+    Raises:
+        ValueError: If the public or private key contains duplicates.
+        ValueError: If the message is empty.
+
+    Returns:
+        str: the decrypted message
     """
-    Decrypts a message using the Vigenère cipher and the periodic table elements.
-    """
+
     if len("".join(dict.fromkeys(public_key))) != len(public_key) or len("".join(dict.fromkeys(private_key))) != len(private_key):
         raise ValueError("Public and private keys must not contain duplicates.")
     
@@ -68,12 +112,19 @@ def decrypt(row: str, public_key: str, private_key: str, encoded: str) -> str:
     
     # 1 - decode message using Vigenère cipher
 
-    decoded = vc.vignere_decode(row, public_key, private_key, encoded)
+    decoded = vc.vigenere_decode(row, encoded, public_key, private_key)
 
     # 2 - turn elements into message
 
-    elements_names = re.findall('[A-Z][^A-Z]*', decoded)
-    elements_list = [el.get_el_by_symbol(name) for name in elements_names]
+    sym_lst = re.findall(r'[A-Z][a-z]?\d*', decoded)
+
+    #handle CounterElement
+    for i, sym in enumerate(sym_lst):
+        if sym == "Ct":
+            sym_lst[i] = sym_lst[i] + sym_lst[i+1]
+            sym_lst.pop(i+1)
+
+    elements_list = [el.get_el_by_symbol(sym) for sym in sym_lst]
 
     message = el.turn_el_into_str(elements_list)
 

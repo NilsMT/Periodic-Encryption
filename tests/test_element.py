@@ -1,15 +1,15 @@
 import pytest
 import periodictable as pt
 
-from periodicencryption import element as el
+from periodicencryption import el
 
 @pytest.mark.parametrize(
     "string",  # Test inputs and expected result
     [
         (""), # empty
-        ("╠"), # loop
+        ("¤"), # loop
         ("test"), # normal
-        ("╠test"), # loop + normal
+        ("¤test"), # loop + normal
     ]
 )
 
@@ -22,7 +22,7 @@ def test_string_elements_conversion(string: str):
 
 
 def test_is_loopcounter():
-    element = el.turn_chr_into_el("╠")
+    element = el.turn_chr_into_el("¤")
     assert element.number >= 900
     assert isinstance(element, el.CounterElement), f"Expected type el.CounterElement, but got {type(element)}"
 

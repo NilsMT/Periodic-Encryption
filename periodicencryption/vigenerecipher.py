@@ -2,10 +2,12 @@ import string
 import pandas as pd
 
 def generate_row() -> str:
+    """Generates a row for the Vigenère table.\n
+
+    Returns:
+        str: A string containing letters, digits, special characters, whitespace, and letters with diacritics.
     """
-    Generates a row of characters that can be used for Vigenère cipher.
-    It includes ASCII letters, digits, special characters, whitespace, and some accented  letters.
-    """
+
     letters = string.ascii_letters
     digits = string.digits
     special_characters = string.punctuation
@@ -17,10 +19,16 @@ def generate_row() -> str:
 
 
 def generate_table(row: str, public_key: str) -> pd.DataFrame:
+    """Generates a Vigenère table.\n
+
+    Args:
+        row (str): the row to be used in the table.
+        public_key (str): the public key to be used in the table.
+
+    Returns:
+        pd.DataFrame: the Vigenère table.
     """
-    Generates the Vigenère table by shifting the row based on the `public_key`.\n
-    The `public_key` determines the shifting for each row.
-    """
+
     row_without_key = "".join([char for char in row if char not in public_key])
     df_row = list(public_key + row_without_key)
 
@@ -42,10 +50,19 @@ def generate_table(row: str, public_key: str) -> pd.DataFrame:
 
 
 
-def vignere_encode(row: str, public_key: str, private_key: str, message: str) -> str:
+def vigenere_encode(row: str, message: str, public_key: str, private_key: str) -> str:
+    """Encodes a message using the Vigenère cipher.\n
+
+    Args:
+        row (str): the row to be used in the table.
+        message (str): the message to be encoded.
+        public_key (str): the public key to be used in the table.
+        private_key (str): the private key to be used in the table.
+
+    Returns:
+        str: the encoded message.
     """
-    Encodes a message using the Vigenère cipher.
-    """
+
     table = generate_table(row, public_key)
     encoded_message = ""
 
@@ -59,11 +76,21 @@ def vignere_encode(row: str, public_key: str, private_key: str, message: str) ->
 
 
 
-def vignere_decode(row: str, public_key: str, private_key: str, encoded_message: str) -> str:
+def vigenere_decode(row: str, encoded_message: str, public_key: str, private_key: str) -> str:
+    """Decodes a message using the Vigenère cipher.\n
+
+    Args:
+        row (str): the row to be used in the table.
+        encoded_message (str): the message to be decoded.
+        public_key (str): the public key to be used in the table.
+        private_key (str): the private key to be used in the table.
+
+    Returns:
+        str: the decoded message.
     """
-    Decodes a message using the Vigenère cipher.
-    """
+    
     table = generate_table(row, public_key)
+
     decoded_message = ""
 
     # Ensure len(private_key) is at least len(encoded_message)
