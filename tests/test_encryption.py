@@ -28,22 +28,36 @@ def test_encrypt_decrypt_set_keys():
     assert decrypted == message, f"Expected {message}, but got {decrypted}"
 
 def test_encrypt_decrypt_duplicate_in_private():
+    message = "Hello, World!"
     row = vc.generate_row()
 
-    puk, prk = "hj","aa"
+    puk = "Kryptos"
+    prk = "Hidden"
+
+    encrypted = en.encrypt_keys_manual(row, message, puk, prk)
+
+    decrypted = en.decrypt(row, encrypted, puk, prk)
+
+    assert decrypted == message, f"Expected {message}, but got {decrypted}"
     
-    with pytest.raises(ValueError):
-        en.decrypt(row, "message", puk, prk), f"Expected Error, but got ..."
+    
 
 
 
 def test_encrypt_decrypt_duplicate_in_public():
+    message = "Hello, World!"
     row = vc.generate_row()
 
-    puk, prk = "aa","hj"
+    puk = "Krypptos"
+    prk = "Hide"
 
-    with pytest.raises(ValueError):
-        en.decrypt(row, "message", puk, prk), f"Expected Error, but got ..."
+    encrypted = en.encrypt_keys_manual(row, message, puk, prk)
+
+    decrypted = en.decrypt(row, encrypted, puk, prk)
+
+    assert decrypted == message, f"Expected {message}, but got {decrypted}"
+
+
 
 def test_encrypt_decrypt_out_of_bound():
     message = "¤"
@@ -54,3 +68,5 @@ def test_encrypt_decrypt_out_of_bound():
     decrypted = en.decrypt(row, encoded, puk, prk)
 
     assert decrypted == message, f"Expected {message}, but got {decrypted}"
+
+# Code by NilsMT on GitHub

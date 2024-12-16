@@ -29,15 +29,20 @@ def generate_table(row: str, public_key: str) -> pd.DataFrame:
         pd.DataFrame: the Vigenère table.
     """
 
-    row_without_key = "".join([char for char in row if char not in public_key])
-    df_row = list(public_key + row_without_key)
+    row_no_dupe = "".join(dict.fromkeys(row))
+    public_key_no_dupe = "".join(dict.fromkeys(public_key))
+
+    row_without_key = "".join([char for char in row_no_dupe if char not in public_key_no_dupe])
+
+    
+
+    df_row = list(public_key_no_dupe + row_without_key)
 
     df = pd.DataFrame(columns=list(df_row), index=list(df_row))
 
     # Create the first row
     df.loc[df_row[0]] = df_row
 
-    df.index
     # Create the following rows
     for i in range(1, len(row)):
         df_row = df_row[1:] + df_row[:1]
@@ -45,6 +50,9 @@ def generate_table(row: str, public_key: str) -> pd.DataFrame:
         df.loc[
             df.index.tolist()[i]
         ] = df_row
+
+
+    print(df)
 
     return df
 
@@ -101,3 +109,5 @@ def vigenere_decode(row: str, encoded_message: str, public_key: str, private_key
         decoded_message += table[table[k] == m].index[0]
     
     return decoded_message
+
+# Code by NilsMT on GitHub

@@ -32,3 +32,5 @@ def test_is_not_loopcounter():
     element = el.turn_chr_into_el("a")
     assert element.number < 900
     assert isinstance(element, pt.core.Element), f"Expected type pt.core.Element, but got {type(element)}"
+
+# Code by NilsMT on GitHub

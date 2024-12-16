@@ -7,10 +7,10 @@ long_description = (this_directory / "README.md").read_text()
 setup(
     name="periodicencryption",
     packages = ["periodicencryption"], 
-    version = '1.1.1',
+    version = '1.1.2',
     license='MIT',
 
-    description="Allow you to encrypt & decrypt strings using the periodic table elements",
+    description="Allows you to encrypt and decrypt messages by the mean of Vigenere Cipher and Periodic Table of Elements",
     long_description=long_description,
     long_description_content_type='text/markdown',
 
@@ -22,9 +22,7 @@ setup(
     install_requires = [
         'periodictable',
         'numpy',
-        'wheel',
-        'pandas',
-        'pytest'
+        'pandas'
     ],
 
     keywords = ['CRYPTOGRAPHY', 'SECURITY', 'PERIODIC TABLE', 'CHEMICAL', 'WEIRD'],

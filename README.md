@@ -135,7 +135,6 @@ Encrypts a message using the Vigenère cipher and the periodic table elements, w
 - `private_key` (str): The private key.
 
 #### Raises:
-- `ValueError`: If the public or private key contains duplicates.
 - `ValueError`: If the message is empty.
 
 #### Returns:
@@ -174,7 +173,6 @@ Decrypts a message using the Vigenère cipher and the periodic table elements.
 - `private_key` (str): The private key.
 
 #### Raises:
-- `ValueError`: If the public or private key contains duplicates.
 - `ValueError`: If the message is empty.
 
 #### Returns:

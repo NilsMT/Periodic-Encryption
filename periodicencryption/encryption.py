@@ -28,7 +28,7 @@ def generate_keys(string: str) -> tuple[str, str]:
     # private key : 1st element name + last element symbol + 1st element symbol + last element name
     private_key = first_element.name.capitalize() + last_element.symbol + first_element.symbol + last_element.name.capitalize()
 
-    return "".join(dict.fromkeys(public_key)), "".join(dict.fromkeys(private_key)) #remove duplicates
+    return public_key, private_key
 
 def encrypt_keys_manual(row: str, message: str, public_key: str, private_key: str) -> str:
     """Encrypts a message using the Vigenère cipher and the periodic table elements, with the specified keys.
@@ -40,15 +40,11 @@ def encrypt_keys_manual(row: str, message: str, public_key: str, private_key: st
         private_key (str): the private key
 
     Raises:
-        ValueError: If the public or private key contains duplicates.
         ValueError: If the message is empty.
 
     Returns:
         str: the encrypted message
     """
-
-    if len("".join(dict.fromkeys(public_key))) != len(public_key) or len("".join(dict.fromkeys(private_key))) != len(private_key):
-        raise ValueError("Public and private keys must not contain duplicates.")
     
     if len(message) == 0:
         raise ValueError("Message cannot be empty.")
@@ -97,15 +93,11 @@ def decrypt(row: str, encoded: str, public_key: str, private_key: str) -> str:
         private_key (str): the private key
 
     Raises:
-        ValueError: If the public or private key contains duplicates.
         ValueError: If the message is empty.
 
     Returns:
         str: the decrypted message
     """
-
-    if len("".join(dict.fromkeys(public_key))) != len(public_key) or len("".join(dict.fromkeys(private_key))) != len(private_key):
-        raise ValueError("Public and private keys must not contain duplicates.")
     
     if len(encoded) == 0:
         raise ValueError("Message cannot be empty.")
@@ -129,3 +121,5 @@ def decrypt(row: str, encoded: str, public_key: str, private_key: str) -> str:
     message = el.turn_el_into_str(elements_list)
 
     return message
+
+# Code by NilsMT on GitHub

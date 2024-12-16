@@ -210,3 +210,5 @@ def turn_el_into_str(element_list: list[pt.core.Element]) -> str:
     for e in element_list:
         string += turn_el_into_chr(e)
     return string
+
+# Code by NilsMT on GitHub

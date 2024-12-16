@@ -46,3 +46,5 @@ def test_not_duplicate_in_table_indexes():
     table = vc.generate_table(row, "key")
 
     assert len(table.index.to_list()) == len(row), f"Table indexes contain duplicates: {table.index.to_list()}"
+
+# Code by NilsMT on GitHub
