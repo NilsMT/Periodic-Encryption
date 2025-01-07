@@ -59,9 +59,6 @@ def generate_table(row: str, public_key: str) -> pd.DataFrame:
             df.index.tolist()[i]
         ] = df_row
 
-
-    print(df)
-
     return df
 
 
