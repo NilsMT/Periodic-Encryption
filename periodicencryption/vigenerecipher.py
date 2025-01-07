@@ -25,6 +25,9 @@ def generate_table(row: str, public_key: str) -> pd.DataFrame:
         row (str): the row to be used in the table.
         public_key (str): the public key to be used in the table.
 
+    Raises:
+        ValueError: If every character of the public key is not in the row.
+
     Returns:
         pd.DataFrame: the Vigenère table.
     """
@@ -32,8 +35,13 @@ def generate_table(row: str, public_key: str) -> pd.DataFrame:
     row_no_dupe = "".join(dict.fromkeys(row))
     public_key_no_dupe = "".join(dict.fromkeys(public_key))
 
-    row_without_key = "".join([char for char in row_no_dupe if char not in public_key_no_dupe])
+    # check if every char of key is in row
+    for char in public_key_no_dupe:
+        if char not in row_no_dupe:
+            raise ValueError("Every character of the public key must be in the row.")
 
+
+    row_without_key = "".join([char for char in row_no_dupe if char not in public_key_no_dupe])
     
 
     df_row = list(public_key_no_dupe + row_without_key)

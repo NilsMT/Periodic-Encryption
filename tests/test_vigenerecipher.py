@@ -1,3 +1,4 @@
+import pytest
 from periodicencryption import vc
 
 def test_unknown_not_in_row():
@@ -5,17 +6,27 @@ def test_unknown_not_in_row():
     assert row.find("�") == -1, f"Character '�' should not be in the row."
 
 
-def test_generate_table():
+
+def test_generate_table_ok():
 
     puk = "1234"
     row = vc.generate_row()
-    first_row = puk+ vc.generate_row().replace(puk, "")
+    first_row = puk + vc.generate_row().replace(puk, "")
     second_row = first_row[1:] + first_row[:1]
 
     table = vc.generate_table(row, puk)
 
     assert table[first_row[0]].to_list() == list(first_row), f"Expected first row to start with ({puk}), but got {table[0]}"
     assert table[first_row[1]].to_list() == list(second_row), f"Expected {second_row} to be offsetted by 1, but got {table[1]}"
+
+
+
+def test_generate_table_not_ok():
+    puk = "1234"
+    row = "abcdefghijklmnopqrstuvwxyz"
+    
+    with pytest.raises(ValueError):
+        vc.generate_table(row, puk)
 
 
 

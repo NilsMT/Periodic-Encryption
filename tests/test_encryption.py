@@ -1,5 +1,3 @@
-import pytest
-
 from periodicencryption import en, vc
 
 
@@ -14,6 +12,8 @@ def test_encrypt_decrypt_no_set_keys():
 
     assert decrypted == message, f"Expected {message}, but got {decrypted}"
 
+
+
 def test_encrypt_decrypt_set_keys():
     message = "Hello, World!"
     row = vc.generate_row()
@@ -27,6 +27,8 @@ def test_encrypt_decrypt_set_keys():
 
     assert decrypted == message, f"Expected {message}, but got {decrypted}"
 
+
+
 def test_encrypt_decrypt_duplicate_in_private():
     message = "Hello, World!"
     row = vc.generate_row()
@@ -39,8 +41,6 @@ def test_encrypt_decrypt_duplicate_in_private():
     decrypted = en.decrypt(row, encrypted, puk, prk)
 
     assert decrypted == message, f"Expected {message}, but got {decrypted}"
-    
-    
 
 
 

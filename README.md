@@ -344,6 +344,9 @@ Generates a Vigenère table.
 - `row` (str): The row to be used in the table.
 - `public_key` (str): The public key to be used in the table.
 
+#### Raises:
+- `ValueError`: If every character of the public key is not in the row.
+
 #### Returns:
 - `pd.DataFrame`: The Vigenère table.
 
