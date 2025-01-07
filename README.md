@@ -53,9 +53,9 @@ Hello, World!
      - [turn_el_into_str](#turn_el_into_str)
    - [Vigenerecipher sub-package](#vigenerecipher-sub-package)
      - [generate_row](#generate_row)
-     - [generate_table](#generate_-_table)
-     - [vigenere_encode](#vigenere_-_encode)
-     - [vigenere_decode](#vigenere_-_decode)
+     - [generate_table](#generate_table)
+     - [vigenere_encode](#vigenere_encode)
+     - [vigenere_decode](#vigenere_decode)
 
 ## Installation
 
