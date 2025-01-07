@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 setup(
     name="periodicencryption",
     packages = ["periodicencryption"], 
-    version = '1.1.3',
+    version = '1.1.4',
     license='MIT',
 
     description="Allows you to encrypt and decrypt messages by the mean of Vigenere Cipher and Periodic Table of Elements",
