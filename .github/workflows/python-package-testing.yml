@@ -19,7 +19,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies and packages
-        run: pip install . && pip install wheel && pip install pytest
+        run: pip install . && pip install wheel && pip install pytest && pip install twine
 
       - name: Run tests with pytest
         run: pytest
